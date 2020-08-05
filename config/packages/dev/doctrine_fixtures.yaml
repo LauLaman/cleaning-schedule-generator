@@ -1,0 +1,4 @@
+services:
+  App\DataFixtures\:
+    resource: '%kernel.project_dir%/database/DataFixtures'
+    tags: ['doctrine.fixture.orm']

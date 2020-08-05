@@ -1,0 +1,34 @@
+doctrine:
+    dbal:
+        driver: 'pdo_mysql'
+        url: '%env(resolve:DATABASE_URL)%'
+        schema_filter: ~^(?!__)~
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        mapping_types:
+            enum: string
+        types:
+            # IDs -> Please keep them alphabetically ordered
+            national_holiday_id: App\NationalHoliday\Infrastructure\Persistence\DoctrineNationalHolidayIdMapper
+            location_id: \App\Location\Infrastructure\Persistence\DoctrineLocationIdMapper
+            cleaning_service_id: \App\CleaningService\Infrastructure\Persistence\DoctrineCleaningServiceIdMapper
+            cleaning_schedule_id: \App\CleaningSchedule\Infrastructure\Persistence\DoctrineCleaningScheduleIdMapper
+            cleaning_subscription_id: \App\CleaningSubscription\Infrastructure\Persistence\DoctrineCleaningSubscriptionIdMapper
+
+            # Enum Values -> Please keep them alphabetically ordered
+            enum_cleaning_schedule_type: \App\CleaningSchedule\Infrastructure\Persistence\DoctrineCleaningScheduleTypeMapper
+            enum_monthly_schedule: \App\CleaningSchedule\Infrastructure\Persistence\DoctrineMonthlyScheduleTypeMapper
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src'
+                prefix: 'App'
+                alias: App
