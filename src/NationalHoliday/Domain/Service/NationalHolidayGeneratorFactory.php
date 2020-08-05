@@ -31,6 +31,8 @@ class NationalHolidayGeneratorFactory
             }
         }
 
-        throw new CountryNotSupportedException($country);
+        throw new CountryNotSupportedException(
+            sprintf('Country %s is currently not supported.', $country)
+        );
     }
 }
