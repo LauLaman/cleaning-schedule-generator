@@ -86,4 +86,13 @@ class Address
     {
         return $this->country;
     }
+
+    public function getFormatted(): string
+    {
+        $address = sprintf('%s %s%s', $this->street, $this->houseNumber, $this->houseNumberAddition). PHP_EOL;
+        $address .= sprintf('%s, %s', $this->postalCode, $this->city). PHP_EOL;
+        $address .= $this->country;
+
+        return $address;
+    }
 }

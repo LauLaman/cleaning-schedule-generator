@@ -43,4 +43,27 @@ class CleaningService
         $this->name = $name;
         $this->timeInMinutes = $timeInMinutes;
     }
+
+    public function getId(): ?CleaningServiceId
+    {
+        return $this->id;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getTimeInMinutes(): int
+    {
+        return $this->timeInMinutes;
+    }
+
+    /**
+     * @return Collection|CleaningSubscription[]
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
 }

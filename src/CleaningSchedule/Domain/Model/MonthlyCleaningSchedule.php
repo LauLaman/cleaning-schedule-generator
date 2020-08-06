@@ -6,6 +6,7 @@ namespace App\CleaningSchedule\Domain\Model;
 
 use App\CleaningSchedule\Domain\ValueObject\MonthlySchedule;
 use App\CleaningSubscription\Domain\Model\CleaningSubscription;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,5 +26,18 @@ class MonthlyCleaningSchedule extends CleaningSchedule
     ) {
         parent::__construct($subscription);
         $this->monthlySchedule = $monthlySchedule;
+    }
+
+    public function shouldPerform(DateTimeImmutable $date): bool
+    {
+        if ($this->monthlySchedule->isFirstDayOfTheMonth()) {
+            return $date->modify('first day of this month')->format('y-m-d') === $date->format('y-m-d');
+        }
+
+        if ($this->monthlySchedule->isLastWorkingDayOfTheMonth()) {
+            return $date->modify('last day of this month')->format('y-m-d') === $date->format('y-m-d');
+        }
+
+        return false;
     }
 }

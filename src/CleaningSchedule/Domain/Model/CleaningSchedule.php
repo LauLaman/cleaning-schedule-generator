@@ -6,6 +6,8 @@ namespace App\CleaningSchedule\Domain\Model;
 
 use App\CleaningSchedule\Domain\ValueObject\CleaningScheduleId;
 use App\CleaningSubscription\Domain\Model\CleaningSubscription;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,7 +40,7 @@ abstract class CleaningSchedule
      * @ORM\ManyToOne(targetEntity="\App\CleaningSchedule\Domain\Model\CleaningSchedule", inversedBy="childSchedule")
      * @ORM\JoinColumn(name="parent_cleaning_schedule_id", referencedColumnName="id", nullable=true)
      */
-    private CleaningSchedule $parentSchedule;
+    protected ?CleaningSchedule $parentSchedule;
 
     /**
      * @var Collection|CleaningSchedule[]
@@ -65,4 +67,24 @@ abstract class CleaningSchedule
     {
         return $this->subscription;
     }
+
+    public function hasParentSchedule(): bool
+    {
+        return null !== $this->parentSchedule;
+    }
+
+    public function shouldPerformOnDate(DateTimeImmutable $date): bool
+    {
+        if (!$this->shouldPerform($date)) {
+            return false;
+        }
+
+        if ($this->hasParentSchedule()) {
+            return $this->parentSchedule->shouldPerformOnDate($date);
+        }
+
+        return true;
+    }
+
+    abstract protected function shouldPerform(DateTimeImmutable $date): bool;
 }

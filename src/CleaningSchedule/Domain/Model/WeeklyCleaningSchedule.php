@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\CleaningSchedule\Domain\Model;
 
 use App\CleaningSubscription\Domain\Model\CleaningSubscription;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -57,7 +59,8 @@ class WeeklyCleaningSchedule extends CleaningSchedule
         bool $friday,
         bool $saturday,
         bool $sunday
-    ) {
+    )
+    {
         parent::__construct($subscription);
 
         $this->monday = $monday;
@@ -104,5 +107,10 @@ class WeeklyCleaningSchedule extends CleaningSchedule
         return $this->sunday;
     }
 
+    public function shouldPerform(DateTimeImmutable $date): bool
+    {
+        $dayName = 'on'.$date->format('l');
 
+        return $this->$dayName();
+    }
 }

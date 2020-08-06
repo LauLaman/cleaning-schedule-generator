@@ -11,6 +11,11 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    public function boot()
+    {
+        return parent::boot();
+    }
+
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $container->import('../config/{packages}/*.yaml');

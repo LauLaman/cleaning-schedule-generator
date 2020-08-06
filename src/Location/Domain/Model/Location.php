@@ -59,4 +59,12 @@ class Location
     {
         return $this->address;
     }
+
+    /**
+     * @return Collection|CleaningSubscription
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
 }

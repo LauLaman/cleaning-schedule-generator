@@ -1,0 +1,10 @@
+monolog:
+  handlers:
+    main:
+      type: error_log
+      level: WARNING
+    deduplicated:
+      type: deduplication
+      time: 60
+      handler: main
+      channels: ['!php']

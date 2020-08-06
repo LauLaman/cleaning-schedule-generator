@@ -48,4 +48,26 @@ class CleaningSubscription
         $this->cleaningService = $cleaningService;
     }
 
+    public function getId(): ?CleaningSubscriptionId
+    {
+        return $this->id;
+    }
+
+    public function getLocation(): Location
+    {
+        return $this->location;
+    }
+
+    public function getCleaningService(): CleaningService
+    {
+        return $this->cleaningService;
+    }
+
+    /**
+     * @return Collection|CleaningSchedule[]
+     */
+    public function getCleaningSchedule(): Collection
+    {
+        return $this->cleaningSchedule;
+    }
 }
